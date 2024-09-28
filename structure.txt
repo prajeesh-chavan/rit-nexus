@@ -1,0 +1,80 @@
+/server
+│
+├── /config
+│   ├── db.js                 # MongoDB connection configuration
+│   └── keys.js               # API keys, environment variables
+│
+├── /controllers
+│   ├── authController.js      # Handles user authentication
+│   ├── blogController.js      # CRUD operations for blog posts
+│   └── commentController.js   # CRUD operations for comments
+│
+├── /middlewares
+│   ├── authMiddleware.js      # Protects routes (authentication, roles)
+│   └── errorMiddleware.js     # Error handling middleware
+│
+├── /models
+│   ├── User.js                # User model schema
+│   ├── Blog.js                # Blog post model schema
+│   └── Comment.js             # Comment model schema
+│
+├── /routes
+│   ├── authRoutes.js          # Routes for authentication (login, register)
+│   ├── blogRoutes.js          # Routes for blog post operations
+│   └── commentRoutes.js       # Routes for comments
+│
+├── /utils
+│   ├── cloudinary.js          # Cloudinary config for image uploads
+│   └── generateToken.js       # JWT token generation
+│
+├── /validation
+│   └── blogValidation.js      # Validation logic for blog posts (Joi or express-validator)
+│
+├── server.js                  # Main backend server entry point
+└── package.json               # Node.js dependencies for backend
+
+
+/client
+│
+├── /public                    # Public folder for static assets
+│   ├── index.html             # Main HTML file
+│   └── favicon.ico            # Website icon
+│
+├── /src
+│   ├── /components            # Reusable components
+│   │   ├── Header.js          # Website header
+│   │   ├── Footer.js          # Website footer
+│   │   ├── BlogCard.js        # Component to display a blog card
+│   │   └── CommentForm.js     # Form component for adding comments
+│   │
+│   ├── /pages                 # Pages for routing
+│   │   ├── HomePage.js        # Homepage that lists all blogs
+│   │   ├── BlogPage.js        # Individual blog post page
+│   │   ├── LoginPage.js       # Login page
+│   │   ├── RegisterPage.js    # Register page
+│   │   ├── DashboardPage.js   # User dashboard for managing posts
+│   │   └── AdminPage.js       # Admin dashboard for managing all content
+│   │
+│   ├── /services              # API services to communicate with backend
+│   │   ├── authService.js     # Handles authentication API calls
+│   │   ├── blogService.js     # Handles blog-related API calls
+│   │   └── commentService.js  # Handles comment-related API calls
+│   │
+│   ├── /context               # React Context API for global state
+│   │   ├── AuthContext.js     # Provides authentication state
+│   │   └── BlogContext.js     # Provides blog and comments state
+│   │
+│   ├── /hooks                 # Custom React hooks
+│   │   └── useAuth.js         # Hook to manage authentication logic
+│   │
+│   ├── /layouts               # Layout components (e.g., DashboardLayout, MainLayout)
+│   │   └── MainLayout.js      # Layout wrapper for main pages
+│   │
+│   ├── /assets                # Static images, fonts, etc.
+│   │
+│   ├── /styles                # Global and component-specific styles
+│   │   └── main.css           # Main CSS file (or Tailwind setup)
+│   │
+│   ├── App.js                 # Main React component
+│   ├── index.js               # Entry point of the React app
+│   └── package.json           # Frontend dependencies
