@@ -18,10 +18,14 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   phone: {
-    type: Number,
+    type: String,
   },
   bio: {
     type: String,
+  },
+  image: {
+    type: String,
+    default: "uploads/profile/avatar.png",
   },
 });
 

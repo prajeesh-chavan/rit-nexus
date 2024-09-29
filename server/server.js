@@ -11,6 +11,8 @@ dotenv.config();
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profile");
 const postRoutes = require("./routes/postRoutes");
+const dashboardRoutes = require("./routes/dashboard");
+const commentRoutes = require("./routes/commentRoutes");
 
 // Connect to MongoDB
 connectDB();
@@ -29,6 +31,8 @@ app.use(cors());
 app.use("/api/user", profileRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/comments", commentRoutes);
 
 // Serve a basic welcome route
 app.get("/", (req, res) => {

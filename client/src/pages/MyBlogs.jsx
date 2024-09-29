@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getMyBlogs, deletePost } from "../services/postService";
+import Loader from "../components/Loader";
 
 const MyBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -40,7 +41,7 @@ const MyBlogs = () => {
   };
 
   if (loading) {
-    return <div className="text-center">Loading...</div>;
+    return <Loader/>;
   }
 
   if (error) {

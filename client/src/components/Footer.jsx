@@ -15,25 +15,25 @@ const Footer = () => {
         {/* Social Media Icons */}
         <div className="mt-8 flex justify-center space-x-4">
           <a
-            href="#"
+            href="https://wa.me/7012020059"
             className="text-gray-400 hover:text-white transition duration-200"
           >
             <FaWhatsapp size={24} />
           </a>
           <a
-            href="#"
+            href="https://github.com/prajeesh-chavan"
             className="text-gray-400 hover:text-white transition duration-200"
           >
             <FaGithub size={24} />
           </a>
           <a
-            href="#"
+            href="https://www.instagram.com/prajeeshchavan/"
             className="text-gray-400 hover:text-white transition duration-200"
           >
             <FaInstagram size={24} />
           </a>
           <a
-            href="#"
+            href="https://www.linkedin.com/in/prajeeshchavan"
             className="text-gray-400 hover:text-white transition duration-200"
           >
             <FaLinkedin size={24} />

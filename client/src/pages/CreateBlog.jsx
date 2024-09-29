@@ -17,7 +17,20 @@ const CreateBlog = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Handle form submission for publishing or saving as a draft
+  // Handle image selection and preview
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Handle form submission
   const handleSubmit = async (e, postStatus) => {
     e.preventDefault();
     setLoading(true);
@@ -90,7 +103,7 @@ const CreateBlog = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium">Category</label>
+            <label className="block text-sm font-medium mt-12">Category</label>
             <input
               type="text"
               value={category}
@@ -114,6 +127,29 @@ const CreateBlog = () => {
             />
           </div>
 
+          {/* Image Upload Section */}
+          <div>
+            <label className="block text-sm font-medium">Upload Image</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border file:border-gray-300 file:rounded-lg file:text-sm file:font-semibold file:bg-secondary file:text-white hover:file:bg-secondary/85"
+            />
+          </div>
+
+          {/* Image Preview */}
+          {imagePreview && (
+            <div className="mt-4">
+              <p className="text-sm font-medium">Image Preview:</p>
+              <img
+                src={imagePreview}
+                alt="Selected"
+                className="mt-2 w-full max-w-xs rounded-lg"
+              />
+            </div>
+          )}
+
           {/* Buttons for Publish and Save as Draft */}
           <div className="flex space-x-4">
             <button
@@ -134,6 +170,56 @@ const CreateBlog = () => {
             </button>
           </div>
         </form>
+
+        {/* Preview Section */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold mb-4">Live Preview</h2>
+
+          {/* Blog Preview */}
+          <article className="blog-content bg-gray-100 p-6 rounded-lg">
+            {/* Preview Image */}
+            {imagePreview && (
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="w-full h-72 object-cover rounded-lg"
+              />
+            )}
+
+            {/* Preview Title */}
+            <h1 className="text-4xl font-bold mt-4 text-secondary">
+              {title || "Blog Title"}
+            </h1>
+
+            {/* Preview Author, Date, and Category */}
+            <p className="text-gray-500 text-sm mb-6">
+              By Preview Author | {new Date().toLocaleDateString()} |{" "}
+              {category || "Category"}
+            </p>
+
+            {/* Preview Content */}
+            <div
+              className="text-gray-700"
+              dangerouslySetInnerHTML={{
+                __html:
+                  content || "<p>Your blog content will appear here...</p>",
+              }}
+            ></div>
+
+            {/* Preview Tags */}
+            {tags && (
+              <div className="mt-4">
+                <p className="text-sm font-medium text-gray-600">
+                  Tags:{" "}
+                  {tags
+                    .split(",")
+                    .map((tag) => tag.trim())
+                    .join(", ")}
+                </p>
+              </div>
+            )}
+          </article>
+        </div>
       </div>
     </>
   );

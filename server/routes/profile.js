@@ -1,7 +1,40 @@
 const express = require("express");
 const auth = require("../middleware/auth");
 const User = require("../models/User");
+const multer = require("multer");
+const path = require("path");
 const router = express.Router();
+
+// Multer setup for file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/profile/"); // Directory where images will be stored
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${req.user.id}-${Date.now()}${path.extname(file.originalname)}`); // Custom file name
+  },
+});
+
+// File filter to accept only images
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = /jpeg|jpg|png/;
+  const extname = allowedTypes.test(
+    path.extname(file.originalname).toLowerCase()
+  );
+  const mimetype = allowedTypes.test(file.mimetype);
+
+  if (extname && mimetype) {
+    cb(null, true);
+  } else {
+    cb("Error: Images Only!");
+  }
+};
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 1024 * 1024 * 5 }, // 5MB limit
+  fileFilter,
+});
 
 // Get User Profile (Protected Route)
 router.get("/", auth, async (req, res) => {
@@ -14,23 +47,27 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.put("/", auth, async (req, res) => {
+// Add this route in your profile.js backend file
+
+// Update User Profile (Protected Route)
+router.put("/", auth, upload.single("image"), async (req, res) => {
   try {
-    const updatedData = {
+    const id = req.user.id;
+    const updateData = {
       name: req.body.name,
       email: req.body.email,
-      phone: req.body.phone,
       bio: req.body.bio,
+      image: req.file ? req.file.path : undefined, // Only set image if uploaded
     };
-    const user = await User.findByIdAndUpdate(req.user.id, updatedData, {
+
+    const updatedUser = await User.findByIdAndUpdate(id, updateData, {
       new: true,
-    });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.status(200).json(user); // Return the updated user
-  } catch (error) {
-    res.status(500).json({ message: "Error updating user", error });
+      runValidators: true,
+    }).select("-password");
+
+    res.json({ success: true, user: updatedUser });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server Error" });
   }
 });
 
