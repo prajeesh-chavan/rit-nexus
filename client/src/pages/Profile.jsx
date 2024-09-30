@@ -65,11 +65,11 @@ const Profile = () => {
 
   return (
     <>
-      <div className="flex justify-center min-h-screen bg-gray-100">
-        <div className="bg-white rounded-lg shadow-lg p-8 w-full h-full">
+      <div className="flex-col justify-center min-h-screen bg-gray-100">
           <h1 className="text-3xl font-bold text-center mb-6">
             {isEditing ? "Edit Profile" : "Your Profile"}
           </h1>
+        <div className="bg-white rounded-lg shadow-lg p-4 md:p-8 w-full h-full">
 
           {loading ? (
             <div className="flex justify-center">
@@ -196,20 +196,20 @@ const Profile = () => {
 
               {/* Display Name */}
               <div>
-                <p className="text-sm font-medium text-gray-500">Name</p>
-                <p className="text-xl font-semibold text-gray-800">{name}</p>
+                <p className="text-xs md:text-sm font-medium text-gray-500">Name</p>
+                <p className="text-base md:text-xl font-semibold text-gray-800">{name}</p>
               </div>
 
               {/* Display Email */}
               <div>
-                <p className="text-sm font-medium text-gray-500">Email</p>
-                <p className="text-xl font-semibold text-gray-800">{email}</p>
+                <p className="text-xs md:text-sm font-medium text-gray-500">Email</p>
+                <p className="text-base md:text-xl font-semibold text-gray-800">{email}</p>
               </div>
 
               {/* Display Bio */}
               <div>
-                <p className="text-sm font-medium text-gray-500">Bio</p>
-                <p className="text-lg text-gray-800">
+                <p className="text-xs md:text-sm font-medium text-gray-500">Bio</p>
+                <p className="text-base md:text-lg text-gray-800">
                   {bio || "No bio provided"}
                 </p>
               </div>

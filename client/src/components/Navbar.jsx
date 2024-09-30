@@ -8,31 +8,39 @@ import { toast } from "react-hot-toast"; // Ensure you import toast if you're us
 function Navbar() {
   const [profileImage, setProfileImage] = useState(null);
   const [isOpen, setIsOpen] = useState(false); // State to manage mobile menu visibility
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchProfile = async () => {
-      try {
-        const profile = await getUserProfile();
-        setProfileImage(profile.image);
-      } catch (error) {
-        toast.error("Error fetching user profile");
+      if (token) {
+        try {
+          const profile = await getUserProfile();
+          setProfileImage(profile.image);
+        } catch (error) {
+          toast.error("Error fetching user profile");
+        }
       }
     };
 
     fetchProfile();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    toast.success("Logged out successfully");
+  };
+
   const toggleMenu = () => {
     setIsOpen((prev) => !prev); // Toggle mobile menu state
   };
 
   return (
-    <nav className="bg-white my-8 mx-auto w-[90%] max-w-6xl shadow-md rounded-2xl z-50">
+    <nav className="bg-white my-4 md:my-8 mx-auto w-[90%] max-w-6xl shadow-md rounded-2xl z-50">
       <div className="flex items-center justify-between mx-auto p-4">
-      <button
+        <button
           onClick={toggleMenu}
           type="button"
-          className="items-center p-2 w-5 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          className="items-center w-5 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
           aria-controls="navbar-solid-bg"
           aria-expanded={isOpen}
         >
@@ -58,9 +66,8 @@ function Navbar() {
               isOpen ? "translate-x-0" : "-translate-x-full"
             }`}
           >
-            
-            <ul className="flex flex-col font-medium mt-4 p-4">
-              <li>
+            <ul className="flex flex-col font-medium mt-4 p-4" >
+              <li >
                 <NavLink
                   to="/"
                   className={({ isActive }) =>
@@ -77,7 +84,7 @@ function Navbar() {
               </li>
               <li>
                 <NavLink
-                  to="/create"
+                  to="/blogs"
                   className={({ isActive }) =>
                     `block py-2 px-3 rounded ${
                       isActive
@@ -86,7 +93,7 @@ function Navbar() {
                     }`
                   }
                 >
-                  Create Blog
+                  Blogs
                 </NavLink>
               </li>
               <li>
@@ -118,6 +125,15 @@ function Navbar() {
                 </NavLink>
               </li>
             </ul>
+            <div className="p-4 absolute bottom-2 w-full">
+              <Link
+                to="/login"
+                onClick={handleLogout}
+                className="block bg-red-500 w-full items-center justify-center px-5 py-3 text-base font-bold text-center text-white rounded-lg hover:bg-red-700"
+              >
+                Logout
+              </Link>
+            </div>
           </div>
         </div>
         <div className={`hidden md:flex flex-grow justify-center`}>

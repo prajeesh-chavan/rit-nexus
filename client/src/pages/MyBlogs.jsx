@@ -57,16 +57,16 @@ const MyBlogs = () => {
   }
 
   return (
-    <div className="max-w-screen-xl mx-auto px-4 py-6">
+    <div className="max-w-screen-xl mx-auto md:px-4 py-6">
       <h1 className="text-3xl font-bold mb-6 text-left">My Blogs</h1>
       <div className="grid grid-cols-1 gap-6">
         {blogs.map((blog) => (
           <div
             key={blog._id}
-            className="p-6 bg-white flex justify-between shadow-md rounded-lg transition-transform transform hover:scale-[1.01]"
+            className="p-6 bg-white flex flex-col md:flex-row justify-between items-start md:items-center shadow-md rounded-lg transition-transform transform hover:scale-[1.01]"
           >
             <div>
-              <h2 className="font-semibold mb-2 text-xl">
+              <h2 className="font-semibold mb-2 text-lg md:text-xl">
                 {blog.title}
                 <span
                   className={`inline-block ml-2 px-2 py-1 text-sm rounded-lg ${

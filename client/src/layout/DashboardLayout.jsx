@@ -4,7 +4,6 @@ import logo from "../assets/logo.png";
 import { toast } from "react-hot-toast";
 import { MdOutlineMenu } from "react-icons/md";
 
-
 const DashboardLayout = ({ children }) => {
   const [isLoggedOut, setIsLoggedOut] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to manage sidebar visibility
@@ -24,7 +23,7 @@ const DashboardLayout = ({ children }) => {
     <div className="min-h-screen flex">
       {/* Toggle Button for Mobile */}
       <button
-        className="p-4 text-gray-500 text-3xl md:hidden absolute top-0 left-0 z-50"
+        className="p-4 text-gray-500 text-3xl md:hidden fixed top-0 left-0 z-50"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       >
         <MdOutlineMenu />
@@ -32,21 +31,18 @@ const DashboardLayout = ({ children }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed h-screen inset-y-0 left-0 w-64 bg-gray-800 text-white transition-transform transform ${
+        className={`fixed h-screen inset-y-0 left-0 w-64 bg-gray-800 text-white transition-transform transform z-40 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:fixed md:translate-x-0  md:w-64`}
       >
         <nav className="mt-10">
-          <Link
-            to="/"
-            className="flex items-center space-x-3 p-4"
-          >
+          <Link to="/" className="flex items-center space-x-3 p-4">
             <img src={logo} className="h-8" alt="Flowbite Logo" />
             <span className="self-center text-2xl font-extrabold whitespace-nowrap">
               RIT Nexus
             </span>
           </Link>
-          <ul>
+          <ul onClick={() => setIsSidebarOpen(false)}>
             <li className="p-4">
               <Link to="/dashboard" className="hover:text-gray-400">
                 Dashboard Home

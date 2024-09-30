@@ -43,14 +43,14 @@ const HomePage = () => {
         <Navbar />
         {/* Hero Sections */}
         <section className="bg-white">
-          <div className="grid max-w-screen-xl px-12 md:px-24 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+          <div className="grid max-w-screen-xl px-8 md:px-24 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
             <div className="mr-auto place-self-center lg:col-span-7">
-              <h1 className="w-full md:max-w-2xl mb-4 text-3xl font-extrabold tracking-tight leading-none text-center md:text-left md:text-4xl xl:text-5xl">
+              <h1 className="w-full md:max-w-2xl mb-4 p-2 md:p-0 text-4xl font-extrabold tracking-tight leading-none text-center md:text-left md:text-4xl xl:text-5xl">
                 Your Voice. Your Stories
                 <br />
                 RIT Nexus Blog
               </h1>
-              <p className="max-w-2xl mb-6 font-light text-gray-500 text-sm lg:mb-8 md:text-base lg:text-lg">
+              <p className="max-w-2xl mb-6 font-light text-center md:text-start text-gray-500 text-sm lg:mb-8 md:text-base lg:text-lg">
                 At RIT Nexus, every student has a story to tell. Explore a wide
                 range of blogs written by your peers—sharing their experiences,
                 insights, and perspectives on everything from campus life to

@@ -83,7 +83,7 @@ const BlogPage = () => {
   }
 
   return (
-    <div className="relative max-w-screen-xl px-12 md:px-24 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16">
+    <div className="relative max-w-screen-xl px-8 md:px-24 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16">
       <Link to="/">
         <div className="flex gap-5 items-center mb-4">
           <FaArrowLeft />
