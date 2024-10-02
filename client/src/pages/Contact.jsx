@@ -1,46 +1,43 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import Lottie from "lottie-react";
 import contactAnimation from "../assets/lotties/contact.json";
 
 const ContactUs = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true); // Set loading to true while processing
+    setError(""); // Reset any previous error
 
-    // Validate form fields
-    if (!name || !email || !message) {
-      setError("Please fill in all fields.");
-      setLoading(false);
-      return;
-    }
+    const formData = new FormData(event.target);
+    formData.append("access_key", "005ffe6f-0d62-43de-9965-4fa901fc17e0");
 
-    // Simulate form submission
     try {
-      // Here you would typically send the form data to your backend
-      console.log("Form submitted", { name, email, message });
-      toast.success("Your message has been sent!");
-      clearForm();
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      toast.error("There was an error sending your message.");
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        event.target.reset();
+        toast.success("Message sent successfully!");
+      } else {
+        setError(data.message || "Something went wrong, please try again.");
+        setResult("Submission failed");
+        toast.error("Failed to send message.");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again later.");
+      toast.error("Error: " + err.message);
     } finally {
       setLoading(false);
     }
-  };
-
-  const clearForm = () => {
-    setName("");
-    setEmail("");
-    setMessage("");
   };
 
   return (
@@ -49,16 +46,24 @@ const ContactUs = () => {
       <div className="min-h-[80vh] min-w-full flex flex-col justify-center items-center px-4">
         <h1 className="text-5xl font-bold text-center mb-12">Contact Us</h1>
         {error && <div className="text-red-500 text-center mb-4">{error}</div>}
-        <div className="flex flex-col justify-center md:flex-row md:space-x-8">
-          {/* Contact Form */}
-          <div className="md:w-1/3 bg-white shadow-md rounded-lg p-6">
-            <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex flex-col justify-center gap-6 p-6 w-auto md:flex-row">
+
+          <div className="md:w-1/3 rounded-lg md:mt-0">
+            <Lottie animationData={contactAnimation} />
+          </div>
+          <div className="md:w-1/3 bg-white rounded-lg">
+            <form onSubmit={onSubmit} className="space-y-4">
+              <input
+                type="hidden"
+                name="subject"
+                value="New Submission from RIT Nexus"
+              />
+              <input type="hidden" name="from_name" value="RIT Nexus"></input>
               <div>
                 <label className="block text-sm font-medium">Name</label>
                 <input
                   type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  name="name"
                   className="mt-1 block w-full border border-gray-300 rounded-md p-2"
                   placeholder="Your name"
                   required
@@ -68,8 +73,7 @@ const ContactUs = () => {
                 <label className="block text-sm font-medium">Email</label>
                 <input
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  name="email"
                   className="mt-1 block w-full border border-gray-300 rounded-md p-2"
                   placeholder="Your email"
                   required
@@ -78,8 +82,7 @@ const ContactUs = () => {
               <div>
                 <label className="block text-sm font-medium">Message</label>
                 <textarea
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
+                  name="message"
                   className="mt-1 block w-full border border-gray-300 rounded-md p-2"
                   placeholder="Your message"
                   rows="4"
@@ -89,7 +92,7 @@ const ContactUs = () => {
               <div>
                 <button
                   type="submit"
-                  className={`w-full bg-secondary text-white font-bold py-2 rounded-md hover:bg-secondary/85 transition duration-200 ${
+                  className={`w-full bg-[#4C4CE2] text-white font-bold py-2 rounded-md hover:bg-[#4C4CE2]/85 transition duration-200 ${
                     loading ? "opacity-50 cursor-not-allowed" : ""
                   }`}
                   disabled={loading}
@@ -99,13 +102,9 @@ const ContactUs = () => {
               </div>
             </form>
           </div>
-
-          {/* Contact Information */}
-          <div className="md:w-1/3 rounded-lg p-6 mt-6 md:mt-0">
-            <Lottie animationData={contactAnimation} />
-          </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

@@ -13,6 +13,7 @@ const profileRoutes = require("./routes/profile");
 const postRoutes = require("./routes/postRoutes");
 const dashboardRoutes = require("./routes/dashboard");
 const commentRoutes = require("./routes/commentRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 
 // Connect to MongoDB
 connectDB();
@@ -33,8 +34,8 @@ app.use("/api/posts", postRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/comments", commentRoutes);
+app.use("/api/contact", contactRoutes);
 
-// Serve a basic welcome route
 app.get("/", (req, res) => {
   res.send("Welcome to the Blog Website API");
 });

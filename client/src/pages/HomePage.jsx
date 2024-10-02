@@ -83,7 +83,7 @@ const HomePage = () => {
         </section>
 
         {/* Featured Blogs */}
-        <section className="max-w-screen-xl px-12 md:px-24 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16">
+        <section className="max-w-screen-xl px-8 md:px-24 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16">
           <h2 className="text-3xl text-center md:text-left md:text-5xl font-bold mb-12">
             Featured Blogs
           </h2>

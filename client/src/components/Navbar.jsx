@@ -10,6 +10,8 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false); // State to manage mobile menu visibility
   const token = localStorage.getItem("token");
 
+  const SERVER_BASE_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const fetchProfile = async () => {
       if (token) {
@@ -18,12 +20,16 @@ function Navbar() {
           setProfileImage(profile.image);
         } catch (error) {
           toast.error("Error fetching user profile");
+          if (error.response?.status === 401) {
+            handleLogout(); // If token is expired or unauthorized, log out
+            toast.error("Session expired, please log in again.");
+          }
         }
       }
     };
 
     fetchProfile();
-  }, []);
+  }, [token]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -37,24 +43,26 @@ function Navbar() {
   return (
     <nav className="bg-white my-4 md:my-8 mx-auto w-[90%] max-w-6xl shadow-md rounded-2xl z-50">
       <div className="flex items-center justify-between mx-auto p-4">
-        <button
-          onClick={toggleMenu}
-          type="button"
-          className="items-center w-5 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-          aria-controls="navbar-solid-bg"
-          aria-expanded={isOpen}
-        >
-          <span className="sr-only">Open main menu</span>
-          <FaBars size={28} />
-        </button>
+        {/* Logo and title */}
         <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src={logo} className="h-8" alt="Flowbite Logo" />
           <span className="self-center text-2xl font-extrabold whitespace-nowrap">
             RIT Nexus
           </span>
         </a>
-        <div />
+        {/* Mobile menu button */}
+        <button
+          onClick={toggleMenu}
+          type="button"
+          className="items-center w-5 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100"
+          aria-controls="navbar-solid-bg"
+          aria-expanded={isOpen}
+        >
+          <span className="sr-only">Open main menu</span>
+          <FaBars size={28} />
+        </button>
 
+        {/* Mobile menu */}
         <div
           className={`md:block ${
             isOpen ? "fixed inset-0 bg-gray-800 bg-opacity-70 z-40" : "hidden"
@@ -66,8 +74,8 @@ function Navbar() {
               isOpen ? "translate-x-0" : "-translate-x-full"
             }`}
           >
-            <ul className="flex flex-col font-medium mt-4 p-4" >
-              <li >
+            <ul className="flex flex-col font-medium mt-4 p-4">
+              <li>
                 <NavLink
                   to="/"
                   className={({ isActive }) =>
@@ -125,17 +133,30 @@ function Navbar() {
                 </NavLink>
               </li>
             </ul>
-            <div className="p-4 absolute bottom-2 w-full">
-              <Link
-                to="/login"
-                onClick={handleLogout}
-                className="block bg-red-500 w-full items-center justify-center px-5 py-3 text-base font-bold text-center text-white rounded-lg hover:bg-red-700"
-              >
-                Logout
-              </Link>
-            </div>
+            {token ? (
+              <div className="p-4 absolute bottom-2 w-full">
+                <Link
+                  to="/login"
+                  onClick={handleLogout}
+                  className="block bg-red-500 w-full items-center justify-center px-5 py-3 text-base font-bold text-center text-white rounded-lg hover:bg-red-700"
+                >
+                  Logout
+                </Link>
+              </div>
+            ) : (
+              <div className="p-4 absolute bottom-2 w-full">
+                <Link
+                  to="/login"
+                  className="block bg-blue-500 w-full items-center justify-center px-5 py-3 text-base font-bold text-center text-white rounded-lg hover:bg-blue-700"
+                >
+                  Sign In
+                </Link>
+              </div>
+            )}
           </div>
         </div>
+
+        {/* Desktop menu */}
         <div className={`hidden md:flex flex-grow justify-center`}>
           <ul className="flex space-x-8">
             <li>
@@ -155,7 +176,7 @@ function Navbar() {
             </li>
             <li>
               <NavLink
-                to="/create"
+                to="/blogs"
                 className={({ isActive }) =>
                   `block py-2 px-3 rounded ${
                     isActive
@@ -164,7 +185,7 @@ function Navbar() {
                   }`
                 }
               >
-                Create Blog
+                Blogs
               </NavLink>
             </li>
             <li>
@@ -197,13 +218,28 @@ function Navbar() {
             </li>
           </ul>
         </div>
-        <Link to="/dashboard">
-          <img
-            src={`http://192.168.230.130:5000/${profileImage}`}
-            alt="Profile Preview"
-            className="size-10 rounded-full object-cover object-top cursor-pointer shadow-sm hover:scale-[1.02] transition-transform"
-          />
-        </Link>
+
+        {/* Profile Image or Sign In Button */}
+        {token ? (
+          <Link to="/dashboard">
+            {profileImage ? (
+              <img
+                src={`${SERVER_BASE_URL}/${profileImage}`}
+                alt="Profile Preview"
+                className="size-10 rounded-full object-cover object-top cursor-pointer shadow-sm hover:scale-[1.02] transition-transform"
+              />
+            ) : (
+              <div className="size-10 rounded-full bg-gray-300 cursor-pointer shadow-sm"></div> // Placeholder when no image
+            )}
+          </Link>
+        ) : (
+          <Link
+            to="/login"
+            className="hidden md:block px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            Sign In
+          </Link>
+        )}
       </div>
     </nav>
   );
