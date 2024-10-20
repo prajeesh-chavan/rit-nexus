@@ -4,6 +4,7 @@ import { getUserProfile, updateUserProfile } from "../services/userService";
 import { toast } from "react-hot-toast";
 import useImageUpload from "../hooks/useImageUpload";
 import { ClipLoader } from "react-spinners"; // For loading spinner
+import Loader from "../components/Loader";
 
 const Profile = () => {
   const [name, setName] = useState("");
@@ -13,6 +14,8 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const { image, imagePreview, handleImageChange } = useImageUpload();
   const [isEditing, setIsEditing] = useState(false);
+
+  const SERVER_BASE_URL = import.meta.env.VITE_API_URL;
 
   // Reference to the hidden file input
   const fileInputRef = useRef(null);
@@ -66,15 +69,12 @@ const Profile = () => {
   return (
     <>
       <div className="flex-col justify-center min-h-screen bg-gray-100">
-          <h1 className="text-3xl font-bold text-center mb-6">
-            {isEditing ? "Edit Profile" : "Your Profile"}
-          </h1>
+        <h1 className="text-3xl font-bold text-center mb-6">
+          {isEditing ? "Edit Profile" : "Your Profile"}
+        </h1>
         <div className="bg-white rounded-lg shadow-lg p-4 md:p-8 w-full h-full">
-
           {loading ? (
-            <div className="flex justify-center">
-              <ClipLoader color="#4A90E2" loading={loading} size={50} />
-            </div>
+            <Loader />
           ) : isEditing ? (
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Profile Picture Upload */}
@@ -187,28 +187,38 @@ const Profile = () => {
             <div className="space-y-6">
               <div className="flex justify-center">
                 <img
-                  src={`http://localhost:5000/${profileImage}`}
+                  src={`${SERVER_BASE_URL}/${profileImage}`}
                   alt="Profile"
                   className="rounded-full h-40 w-40 object-top object-cover border-4 border-gray-300 shadow-lg cursor-pointer"
-                  onClick={handleImageClick} // Allow image click in view mode as well
+                  onClick={handleImageClick}
                 />
               </div>
 
               {/* Display Name */}
               <div>
-                <p className="text-xs md:text-sm font-medium text-gray-500">Name</p>
-                <p className="text-base md:text-xl font-semibold text-gray-800">{name}</p>
+                <p className="text-xs md:text-sm font-medium text-gray-500">
+                  Name
+                </p>
+                <p className="text-base md:text-xl font-semibold text-gray-800">
+                  {name}
+                </p>
               </div>
 
               {/* Display Email */}
               <div>
-                <p className="text-xs md:text-sm font-medium text-gray-500">Email</p>
-                <p className="text-base md:text-xl font-semibold text-gray-800">{email}</p>
+                <p className="text-xs md:text-sm font-medium text-gray-500">
+                  Email
+                </p>
+                <p className="text-base md:text-xl font-semibold text-gray-800">
+                  {email}
+                </p>
               </div>
 
               {/* Display Bio */}
               <div>
-                <p className="text-xs md:text-sm font-medium text-gray-500">Bio</p>
+                <p className="text-xs md:text-sm font-medium text-gray-500">
+                  Bio
+                </p>
                 <p className="text-base md:text-lg text-gray-800">
                   {bio || "No bio provided"}
                 </p>

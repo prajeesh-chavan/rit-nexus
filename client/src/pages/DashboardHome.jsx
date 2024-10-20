@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { getDashboardStats } from "../services/dashboardService"; // Fetch data from backend
 import { ClipLoader } from "react-spinners";
+import Loader from "../components/Loader";
 
 const DashboardHome = () => {
   const [totalBlogs, setTotalBlogs] = useState(0);
@@ -27,11 +28,7 @@ const DashboardHome = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex justify-center">
-        <ClipLoader color="#4A90E2" loading={loading} size={50} />
-      </div>
-    );
+    return <Loader />;
   }
 
   return (
