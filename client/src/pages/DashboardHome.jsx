@@ -1,12 +1,14 @@
 // src/pages/DashboardHome.js
 import React, { useState, useEffect } from "react";
 import { getDashboardStats } from "../services/dashboardService"; // Fetch data from backend
+import { ClipLoader } from "react-spinners";
 
 const DashboardHome = () => {
   const [totalBlogs, setTotalBlogs] = useState(0);
   const [totalComments, setTotalComments] = useState(0);
   const [drafts, setDrafts] = useState(0);
   const [recentActivity, setRecentActivity] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -16,6 +18,7 @@ const DashboardHome = () => {
         setTotalComments(comments);
         setDrafts(drafts);
         setRecentActivity(activity);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching dashboard stats", error);
       }
@@ -23,9 +26,19 @@ const DashboardHome = () => {
     fetchStats();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="flex justify-center">
+        <ClipLoader color="#4A90E2" loading={loading} size={50} />
+      </div>
+    );
+  }
+
   return (
     <div>
-      <h1 className="text-3xl md:text-4xl font-bold mb-6">Welcome to User Dashboard</h1>
+      <h1 className="text-3xl md:text-4xl font-bold mb-6">
+        Welcome to User Dashboard
+      </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         {/* Total Blogs */}
