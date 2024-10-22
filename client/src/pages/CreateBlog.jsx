@@ -90,15 +90,14 @@ const CreateBlog = () => {
             />
           </div>
 
-          <div>
+          <div className="h-auto">
             <label className="block text-sm font-medium">Content</label>
             <ReactQuill
               value={content}
               onChange={setContent}
-              className="mt-1"
+              className="mt-1 h-96"
               theme="snow"
               placeholder="Write your blog content here..."
-              style={{ height: "200px" }}
             />
           </div>
 
