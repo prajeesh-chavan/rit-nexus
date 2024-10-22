@@ -21,7 +21,7 @@ export const BlogCard = ({ post }) => {
     <Link to={`/blog/${post._id}`}>
       <div className="bg-white h-96 border-gray border-2 border-solid box-border rounded-md w-full overflow-hidden flex flex-col items-start justify-center pb-6 gap-2 text-left text-xs hover:scale-[1.01] hover:shadow-sm transition-transform">
         <img
-          className="w-full h-full object-cover"
+          className="w-full h-56 object-cover"
           alt={post.title}
           src={`${import.meta.env.VITE_API_URL}/${post.image}`}
         />
