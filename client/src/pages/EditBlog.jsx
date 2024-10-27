@@ -241,6 +241,13 @@ const EditBlog = () => {
                 }}
               />
             )}
+            {!imagePreview && (
+              <img
+                src={`${import.meta.env.VITE_API_URL}/${image}`}
+                alt={blogPost.title}
+                className="w-full h-72 object-cover"
+              />
+            )}
             <div
               className="prose max-w-none"
               dangerouslySetInnerHTML={{ __html: content }}
