@@ -164,6 +164,14 @@ const EditBlog = () => {
                   style={{ maxHeight: "200px", maxWidth: "100%" }}
                 />
               )}
+              {!imagePreview && (
+                <img
+                  src={`${import.meta.env.VITE_API_URL}/${blogPost.image}`}
+                  alt={blogPost.title}
+                  className="mt-4 border border-gray-300 rounded-md"
+                  style={{ maxHeight: "200px", maxWidth: "100%" }}
+                />
+              )}
             </div>
 
             {/* Category Input */}
@@ -243,7 +251,7 @@ const EditBlog = () => {
             )}
             {!imagePreview && (
               <img
-                src={`${import.meta.env.VITE_API_URL}/${image}`}
+                src={`${import.meta.env.VITE_API_URL}/${blogPost.image}`}
                 alt={blogPost.title}
                 className="w-full h-72 object-cover"
               />
