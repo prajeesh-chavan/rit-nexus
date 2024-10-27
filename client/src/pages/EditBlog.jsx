@@ -166,8 +166,8 @@ const EditBlog = () => {
               )}
               {!imagePreview && (
                 <img
-                  src={`${import.meta.env.VITE_API_URL}/${blogPost.image}`}
-                  alt={blogPost.title}
+                  src={`${import.meta.env.VITE_API_URL}/${postData.image}`}
+                  alt={postData.title}
                   className="mt-4 border border-gray-300 rounded-md"
                   style={{ maxHeight: "200px", maxWidth: "100%" }}
                 />
