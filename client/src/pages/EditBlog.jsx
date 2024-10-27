@@ -159,7 +159,7 @@ const EditBlog = () => {
               />
               {imagePreview && (
                 <img
-                  src={imagePreview}
+                  src={`${import.meta.env.VITE_API_URL}/${imagePreview}`}
                   alt="Preview"
                   className="mt-4 border border-gray-300 rounded-md"
                   style={{ maxHeight: "200px", maxWidth: "100%" }}
@@ -232,7 +232,7 @@ const EditBlog = () => {
             <h2 className="text-3xl font-bold mb-4">{title}</h2>
             {imagePreview && (
               <img
-                src={imagePreview}
+                src={`${import.meta.env.VITE_API_URL}/${imagePreview}`}
                 alt="Blog Visual"
                 className="mb-4 rounded-lg"
                 style={{
