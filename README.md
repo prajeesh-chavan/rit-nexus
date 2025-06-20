@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🏫 RIT Nexus
+# ✍ RIT Nexus
 
 **Centralized Blogging Platform for RIT Campus Community**
 
